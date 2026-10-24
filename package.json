@@ -5,11 +5,9 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/vue-datepicker.js"
+      "default": "./dist/vue-datepicker.js"
     },
-    "./vue-datepicker.css": {
-      "import": "./dist/vue-datepicker.css"
-    }
+    "./vue-datepicker.css": "./dist/vue-datepicker.css"
   },
   "peerDependencies": {
     "@date-fns/tz": ">=1.5.0",
