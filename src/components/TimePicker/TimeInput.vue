@@ -119,7 +119,7 @@
         </button>
       </slot>
     </div>
-    <template v-for="timeInput in timeInputOverlays" :key="timeInput">
+    <template v-for="timeInput in timeInputOverlays" :key="timeInput.type">
       <transition :name="transitionName(overlays[timeInput.type])" :css="showTransition">
         <SelectionOverlay
           v-if="overlays[timeInput.type]"

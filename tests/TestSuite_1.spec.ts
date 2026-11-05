@@ -10,7 +10,7 @@ import {
 } from './tests-utils';
 import { nextTick } from 'vue';
 import { enGB } from 'date-fns/locale';
-import { WeekStart } from '../constants';
+import { WeekStart } from '../src/constants';
 
 describe('Test Suite 1', () => {
   describe('multi-calendars', () => {

@@ -128,7 +128,7 @@
 
   const dpWrapMenuRef = useTemplateRef('dp-menu-wrap');
   const dpMenuRef = useTemplateRef('dp-menu');
-  const inputRef = useTemplateRef('input-cmp');
+  const inputRef = useTemplateRef<InstanceType<typeof DatepickerInput>>('input-cmp');
   const pickerWrapperRef = useTemplateRef('picker-wrapper');
   const menuArrowRef = useTemplateRef('menu-arrow');
 

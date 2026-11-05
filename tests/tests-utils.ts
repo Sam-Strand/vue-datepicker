@@ -1,7 +1,7 @@
-import VueDatePickerRoot from '../VueDatePickerRoot.vue';
+import VueDatePickerRoot from '../src/VueDatePickerRoot.vue';
 import { format } from 'date-fns';
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
-import type { RootProps } from '../types';
+import type { RootProps } from '../src/types';
 
 export type DPInstance = VueWrapper<InstanceType<typeof VueDatePickerRoot>>;
 

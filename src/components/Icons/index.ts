@@ -1,5 +1,5 @@
-export { CalendarIcon } from './CalendarIcon.ts';
-export { CancelIcon } from './CancelIcon.ts';
+export { CalendarIcon } from './CalendarIcon';
+export { CancelIcon } from './CancelIcon';
 export { ChevronLeftIcon } from './ChevronLeftIcon';
 export { ChevronRightIcon } from './ChevronRightIcon';
 export { ClockIcon } from './ClockIcon';

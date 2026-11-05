@@ -3,8 +3,8 @@ import { flushPromises, mount } from '@vue/test-utils';
 import { h } from 'vue';
 import { TZDate } from '@date-fns/tz';
 
-import VueDatePickerRoot from '../VueDatePickerRoot.vue';
-import DatepickerInput from '../components/DatePickerInput/DatepickerInput.vue';
+import VueDatePickerRoot from '../src/VueDatePickerRoot.vue';
+import DatepickerInput from '../src/components/DatePickerInput/DatepickerInput.vue';
 import { openMenu } from './tests-utils';
 
 afterEach(() => {

@@ -6,15 +6,37 @@
 
 ## Как пересобрать
 
+Здесь лежат исходники (`src/`), поэтому сборка выполняется прямо в этом репозитории:
+
+```bash
+pnpm install --ignore-scripts
+pnpm build   # vite 8 (rolldown) + vite-plugin-dts, пишет dist/
+pnpm test    # vitest, jsdom
+```
+
+`dist/` содержит три файла: `vue-datepicker.js`, `vue-datepicker.css` и единый
+`index.d.ts` (генерируется `bundleTypes: true` через api-extractor),
+как в npm-пакете `@vuepic/vue-datepicker`.
+
+Синхронизация с апстримом (обновление до новой версии):
+
 1. Клонировать апстрим, установить зависимости: `pnpm install --ignore-scripts`.
 2. На ветку от `main` применить патчи нужных PR (только исходники, без `__tests__/TestSuite_1.spec.ts`):
    `git diff main...pr-<N> -- packages/lib/src ':(exclude)packages/lib/src/VueDatePicker/__tests__/TestSuite_1.spec.ts' | git apply -3`.
-3. Собрать библиотеку: `pnpm --filter @vuepic/vue-datepicker build:lib` (vite 8 + unplugin-dts).
-4. Скопировать `packages/lib/dist/vue-datepicker.js` и `index.d.ts` в `dist/` этого репозитория.
-   `main.css` совпадает с `dist/vue-datepicker.css` байт-в-байт.
+3. Перенести `packages/lib/src` в `src/` этого репозитория и прогнать проверки:
+   `pnpm test`, `pnpm build`, сборка приложения-потребителя (`frontend/apps/users`).
 
-Проверки перед обновлением сборки: `vitest run` (базовые тесты + тесты каждого PR),
-`vue-tsc --build`, сборка приложения-потребителя (`frontend/apps/users`).
+## Сборочная инфраструктура (исходники + vite 8)
+
+| Правка | Причина |
+|--------|---------|
+| `vite.config.js`: в `vue({ script: { fs } })` передаётся `fs` на `node:fs` | `@vitejs/plugin-vue` 6 не передаёт `fs` в `compileScript`, и `@vue/compiler-sfc` падал с «No fs option provided to `compileScript`» на `defineProps<RootProps>()` (типы импортируются из других файлов). `fileExists` проверяет `statSync().isFile()`, иначе `resolveExt` принимает каталог `./types` за модуль и падает с `EISDIR` |
+| `src/types/index.ts`, `src/composables/index.ts`, `src/components/Icons/index.ts`: убраны `.ts` в реэкспортах | `TS5097`: импорт с расширением `.ts` допустим только с `allowImportingTsExtensions`, а в `.d.ts` такой путь не резолвится |
+| `src/VueDatePicker.vue`: `useTemplateRef<InstanceType<typeof DatepickerInput>>('input-cmp')` | `TS7022`: без явного аргумента тип `inputRef` выводился циклически (через тип экземпляра `DatepickerInput`) и становился `any`; заодно типизирован `setParsedDate` |
+| `src/components/TimePicker/TimeInput.vue`: `:key="timeInput.type"` вместо `:key="timeInput"` | `TS2322` + реальная ошибка: объект в `key` приводится к `"[object Object]"`, у всех оверлеев одинаковый ключ |
+| `tests/*`: импорты из `../src/...`, `test.environment = 'jsdom'` в `vite.config.js` | После переноса исходников в `src/` тесты не находили компоненты, а без `jsdom` падали на `document is not defined` |
+
+`@microsoft/api-extractor` добавлен в `devDependencies` — его требует `bundleTypes: true`.
 
 ## Применённые PR
 
@@ -94,5 +116,6 @@
 - Все перечисленные выше исправления **не влиты в апстрим** — форк несёт их локально.
   При выходе новой версии апстрима патчи нужно перепроверить/перебазировать.
 - `@floating-ui/vue` остаётся на 1.x (`>=1.1.11` в peerDependencies).
-- Начиная с этой сборки в `dist` лежит единый `index.d.ts` (как в npm-пакете @vuepic),
-  пофайловые `.d.ts` удалены — публичный API от этого не меняется.
+- В `dist` лежит единый `index.d.ts` (как в npm-пакете @vuepic), пофайловых `.d.ts` нет:
+  их собирает `bundleTypes: true`, поэтому `pnpm build` воспроизводит `dist` целиком.
+  Публичный API от этого не меняется.
