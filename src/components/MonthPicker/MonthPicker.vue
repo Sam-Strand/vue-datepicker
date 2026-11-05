@@ -1,0 +1,107 @@
+<template>
+  <InstanceWrap v-slot="{ instances, wrapClass }" :collapse="collapse" stretch>
+    <div v-for="instance in instances" :key="instance" :class="wrapClass">
+      <slot v-if="$slots['top-extra']" name="top-extra" :value="modelValue" />
+      <slot
+        name="month-year"
+        v-bind="{
+          mode: 'month',
+          year,
+          months: groupedMonths(instance),
+          years: groupedYears(instance),
+          selectMonth,
+          selectYear,
+          instance,
+        }"
+      >
+        <SelectionOverlay
+          :items="groupedMonths(instance)"
+          :is-last="rootProps.autoApply && !config.keepActionRow"
+          :height="config.modeHeight"
+          :no-overlay-focus="Boolean(noOverlayFocus || rootProps.textInput)"
+          use-relative
+          :level="0"
+          type="month"
+          @selected="selectMonth($event, instance)"
+          @hover-value="setHoverDate($event, instance)"
+        >
+          <template #header>
+            <YearModePicker
+              :items="groupedYears(instance)"
+              :instance="instance"
+              :show-year-picker="showYearPicker[instance]"
+              :year="year(instance)"
+              :is-disabled="(next: boolean) => isDisabled(instance, next)"
+              @handle-year="handleYear(instance, $event)"
+              @year-select="handleYearSelect($event, instance)"
+              @toggle-year-picker="toggleYearPicker(instance, $event?.show)"
+            >
+              <template v-for="slotName in yearModeSlots" #[slotName]="args" :key="slotName">
+                <slot :name="slotName" v-bind="args" />
+              </template>
+            </YearModePicker>
+          </template>
+          <template v-if="$slots[`month-overlay-value`]" #item="{ item }">
+            <slot :name="`month-overlay-value`" :text="item.text" :value="item.value" />
+          </template>
+        </SelectionOverlay>
+      </slot>
+    </div>
+  </InstanceWrap>
+</template>
+
+<script lang="ts" setup>
+  import { useSlots } from 'vue';
+
+  import SelectionOverlay from '../Common/SelectionOverlay.vue';
+  import InstanceWrap from '../Common/InstanceWrap.vue';
+  import YearModePicker from '../shared/YearModePicker.vue';
+
+  import { type MonthPickerEmits, useMonthPicker } from './useMonthPicker';
+  import { useContext } from '../../composables';
+  import type { BaseProps } from '../../types';
+  import { type ComponentSlots, SlotUse, getSlotsByComponent } from '../../constants/slots';
+
+  const emit = defineEmits<MonthPickerEmits>();
+  defineProps<BaseProps>();
+  defineSlots<ComponentSlots<SlotUse.MonthPicker> & ComponentSlots<SlotUse.YearMode>>();
+
+  const slots = useSlots();
+
+  const {
+    rootProps,
+    defaults: { config },
+  } = useContext();
+
+  const yearModeSlots = getSlotsByComponent(slots, SlotUse.YearMode);
+
+  const {
+    groupedMonths,
+    groupedYears,
+    year,
+    isDisabled,
+    showYearPicker,
+    modelValue,
+    presetDate,
+    setHoverDate,
+    selectMonth,
+    selectYear,
+    toggleYearPicker,
+    handleYearSelect,
+    handleYear,
+    getModelMonthYear,
+  } = useMonthPicker(emit);
+
+  const getSidebarProps = () => {
+    return {
+      modelValue,
+      year,
+      getModelMonthYear,
+      selectMonth,
+      selectYear,
+      handleYear,
+    };
+  };
+
+  defineExpose({ getSidebarProps, presetDate, toggleYearPicker: (show: boolean) => toggleYearPicker(0, show) });
+</script>
