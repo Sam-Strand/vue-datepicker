@@ -1,4 +1,5 @@
-import './assets/css/main.css';
+// стили подключаются только через слой vendor (см. assets/css/vendor.css)
+import './assets/css/vendor.css';
 
 export { default as VueDatePicker } from './VueDatePickerRoot.vue';
 export { TZDate } from '@date-fns/tz';

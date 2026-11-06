@@ -1,6 +1,6 @@
 {
   "name": "vue-datepicker",
-  "version": "14.0.0",
+  "version": "15.0.0",
   "description": "Datepicker component for Vue 3 (vendored source with local fixes)",
   "license": "MIT",
   "type": "module",
@@ -16,7 +16,7 @@
       "default": "./dist/vue-datepicker.js"
     },
     "./vue-datepicker.css": {
-      "development": "./src/assets/css/main.css",
+      "development": "./src/assets/css/vendor.css",
       "default": "./dist/vue-datepicker.css"
     }
   },
@@ -26,21 +26,22 @@
   ],
   "dependencies": {
     "@date-fns/tz": "^1.5.0",
-    "@floating-ui/vue": "^1.1.11",
-    "@vueuse/core": "^14.3.0",
+    "@floating-ui/vue": "^2.0.1",
+    "@vueuse/core": "^15.0.0",
     "date-fns": "^4.4.0"
   },
   "peerDependencies": {
-    "vue": ">=3.5.0"
+    "vue": ">=3.5.45"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.60.1",
     "@vitejs/plugin-vue": "^6.0.10",
-    "@vue/test-utils": "^2.4.10",
+    "@vue/test-utils": "^2.5.1",
     "jsdom": "^29.1.1",
-    "sass": "^1.106.1",
-    "vite": "^8.3.5",
+    "sass": "^1.105.1",
+    "vite": "^8.3.6",
+    "vite-lib-preset": "workspace:*",
     "vite-plugin-dts": "^5.1.2",
-    "vitest": "^4.1.8"
+    "vitest": "^5.1.0"
   }
 }
