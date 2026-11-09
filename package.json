@@ -37,11 +37,11 @@
     "@microsoft/api-extractor": "^7.60.1",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vue/test-utils": "^2.5.1",
-    "jsdom": "^29.1.1",
-    "sass": "^1.105.1",
+    "jsdom": "^31.0.0",
+    "sass": "^1.108.1",
     "vite": "^8.3.6",
-    "vite-lib-preset": "workspace:*",
     "vite-plugin-dts": "^5.1.2",
+    "vite-preset": "workspace:*",
     "vitest": "^5.1.0"
   }
 }

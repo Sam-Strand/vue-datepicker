@@ -1,3 +1,3 @@
-import { vueLib } from 'vite-lib-preset'
+import configVue from 'vite-preset/vue'
 
-export default vueLib()
+export default configVue()
