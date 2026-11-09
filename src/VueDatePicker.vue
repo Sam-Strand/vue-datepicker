@@ -126,7 +126,7 @@
   const modelValueRef = toRef(rootProps, 'modelValue');
   const timezoneRef = toRef(rootProps, 'timezone');
 
-  const dpWrapMenuRef = useTemplateRef('dp-menu-wrap');
+  const dpWrapMenuRef = useTemplateRef<HTMLElement>('dp-menu-wrap');
   const dpMenuRef = useTemplateRef('dp-menu');
   const inputRef = useTemplateRef<InstanceType<typeof DatepickerInput>>('input-cmp');
   const pickerWrapperRef = useTemplateRef('picker-wrapper');

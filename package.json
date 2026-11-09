@@ -16,14 +16,10 @@
       "default": "./dist/vue-datepicker.js"
     },
     "./vue-datepicker.css": {
-      "development": "./src/assets/css/vendor.css",
+      "development": "./src/styles/vendor.css",
       "default": "./dist/vue-datepicker.css"
     }
   },
-  "files": [
-    "dist",
-    "src"
-  ],
   "dependencies": {
     "@date-fns/tz": "^1.5.0",
     "@floating-ui/vue": "^2.0.1",
@@ -35,11 +31,12 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.60.1",
+    "@spiriit/vite-plugin-svg-spritemap": "^7.2.0",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vue/test-utils": "^2.5.1",
     "jsdom": "^31.0.0",
     "sass": "^1.108.1",
-    "vite": "^8.3.6",
+    "vite": "^8.3.7",
     "vite-plugin-dts": "^5.1.2",
     "vite-preset": "workspace:*",
     "vitest": "^5.1.0"
