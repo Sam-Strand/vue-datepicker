@@ -1,10 +1,8 @@
-import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
 import configVue from 'vite-preset/vue'
+import vueSvg from 'vite-vue-svg'
 
 export default configVue({
-  plugins: [
-    VitePluginSvgSpritemap('./src/components/Icons/svg/*.svg'),
-  ],
+  plugins: [vueSvg()],
   test: {
     environment: 'jsdom',
   },

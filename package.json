@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.60.1",
-    "@spiriit/vite-plugin-svg-spritemap": "^7.2.0",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vue/test-utils": "^2.5.1",
     "jsdom": "^31.0.0",
@@ -39,6 +38,7 @@
     "vite": "^8.3.7",
     "vite-plugin-dts": "^5.1.2",
     "vite-preset": "workspace:*",
+    "vite-vue-svg": "workspace:*",
     "vitest": "^5.1.0"
   }
 }
